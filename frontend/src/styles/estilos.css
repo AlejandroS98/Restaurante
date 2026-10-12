@@ -1,0 +1,219 @@
+/* ========== Base ========== */
+body {
+  margin: 0;
+  background: #fafaf9;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #292524;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ========== Barra de navegación ========== */
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.barra-contenido {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.marca {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #c2410c;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: none; /* oculto en celular */
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: #44403c;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  color: #c2410c;
+}
+
+/* ========== Portada (imagen) ========== */
+.hero {
+  min-height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #7c2d12; /* color de respaldo si no carga la imagen */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('/img/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.hero p {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+}
+
+.hero-boton {
+  display: inline-block;
+  background: #ea580c;
+  color: #ffffff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-boton:hover {
+  background: #c2410c;
+}
+
+/* ========== Sección del menú ========== */
+.seccion-menu {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.seccion-menu h2 {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+}
+
+.filtro {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto; /* en celular se desliza de lado */
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 columna en celular */
+  gap: 1.25rem;
+}
+
+/* ========== Tarjetas ========== */
+.tarjeta {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.tarjeta-sin-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: #ffedd5;
+}
+
+/* ========== Pie de página ========== */
+.pie {
+  background: #292524;
+  color: #d6d3d1;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.pie p {
+  margin: 0.2rem 0;
+}
+
+/* ========== MEDIA QUERIES ========== */
+
+/* Tablet: desde 640px */
+@media (min-width: 640px) {
+  .nav-links {
+    display: flex;
+  }
+
+  .hero {
+    min-height: 55vh;
+  }
+
+  .hero h1 {
+    font-size: 2.75rem;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+  }
+
+  .grid-menu {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+  }
+
+  .filtro {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+
+/* Computadora: desde 1024px */
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 65vh;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .grid-menu {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 1.75rem;
+  }
+
+  .tarjeta-img {
+    height: 14rem;
+  }
+}
+
+/* Pantallas grandes: desde 1280px */
+@media (min-width: 1280px) {
+  .grid-menu {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+  }
+}
+
+/* El efecto hover solo en dispositivos con mouse */
+@media (hover: hover) {
+  .tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  }
+}
