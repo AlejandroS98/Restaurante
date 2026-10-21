@@ -3,17 +3,25 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import CategoriaFiltro from './components/CategoriaFiltro'
 import PlatilloCard from './components/PlatilloCard'
+import Ubicaciones from './components/Ubicaciones'
+import Reservar from './components/Reservar'
 import Footer from './components/Footer'
+import PanelAdmin from './components/admin/PanelAdmin'
 import { obtenerCategorias, obtenerPlatillos } from './services/api'
 
 function App() {
+  const [vista, setVista] = useState('menu') // 'menu', 'reservar' o 'admin'
   const [categorias, setCategorias] = useState([])
   const [platillos, setPlatillos] = useState([])
   const [categoriaActiva, setCategoriaActiva] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
+  // Cada vez que se vuelve al menú, se cargan los datos actualizados
   useEffect(() => {
+    if (vista !== 'menu') return
+    setCargando(true)
+    setError('')
     Promise.all([obtenerCategorias(), obtenerPlatillos()])
       .then(([cats, plats]) => {
         setCategorias(cats)
@@ -21,7 +29,7 @@ function App() {
       })
       .catch((e) => setError(e.message))
       .finally(() => setCargando(false))
-  }, [])
+  }, [vista])
 
   const visibles = categoriaActiva
     ? platillos.filter((p) => p.id_categoria === categoriaActiva)
@@ -29,30 +37,38 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Hero />
+      <Navbar vista={vista} onCambiarVista={setVista} />
 
-      <main id="menu" className="seccion-menu">
-        <h2>Nuestro menú</h2>
+      {vista === 'menu' && (
+        <>
+          <Hero />
+          <main id="menu" className="seccion-menu">
+            <h2>Nuestro menú</h2>
 
-        <CategoriaFiltro
-          categorias={categorias}
-          activa={categoriaActiva}
-          onSeleccionar={setCategoriaActiva}
-        />
+            <CategoriaFiltro
+              categorias={categorias}
+              activa={categoriaActiva}
+              onSeleccionar={setCategoriaActiva}
+            />
 
-        {cargando && <p>Cargando menú...</p>}
-        {error && <p className="text-red-600">{error}</p>}
-        {!cargando && !error && visibles.length === 0 && (
-          <p>No hay platillos en esta categoría.</p>
-        )}
+            {cargando && <p>Cargando menú...</p>}
+            {error && <p className="text-red-600">{error}</p>}
+            {!cargando && !error && visibles.length === 0 && (
+              <p>No hay platillos en esta categoría.</p>
+            )}
 
-        <div className="grid-menu">
-          {visibles.map((p) => (
-            <PlatilloCard key={p.id_platillo} platillo={p} />
-          ))}
-        </div>
-      </main>
+            <div className="grid-menu">
+              {visibles.map((p) => (
+                <PlatilloCard key={p.id_platillo} platillo={p} />
+              ))}
+            </div>
+          </main>
+          <Ubicaciones />
+        </>
+      )}
+
+      {vista === 'reservar' && <Reservar />}
+      {vista === 'admin' && <PanelAdmin />}
 
       <Footer />
     </>

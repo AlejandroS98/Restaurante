@@ -34,7 +34,7 @@ class Platillo(models.Model):
 
 class ImagenPlatillo(models.Model):
     id_imagen = models.AutoField(primary_key=True)
-    url_imagen = models.URLField(max_length=500)
+    url_imagen = models.CharField(max_length=500)
     descripcion = models.CharField(max_length=200, blank=True)
     principal = models.BooleanField(default=False)
     platillo = models.ForeignKey(
